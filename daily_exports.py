@@ -26,7 +26,7 @@ def load_config(path='config.toml'):
 
 def validate_config(config):
     required = {
-        'gdrive': ['credentials_path', 'token_path'],
+        'gdrive': ['credentials', 'token'],
         'sheets': ['spreadsheet_id', 'sheets'],
         'drive': ['main_folder_id']
     }
@@ -41,8 +41,8 @@ def validate_config(config):
 config = load_config()
 validate_config(config)
 
-CREDENTIALS_PATH = os.path.expanduser(config['gdrive']['credentials_path'])
-TOKEN_PATH = os.path.expanduser(config['gdrive']['token_path'])
+CREDENTIALS = os.path.expanduser(config['gdrive']['credentials'])
+TOKEN = os.path.expanduser(config['gdrive']['token'])
 SPREADSHEET_ID = config['sheets']['spreadsheet_id']
 SHEETS = config['sheets']['sheets']
 MAIN_FOLDER_ID = config['drive']['main_folder_id'] 
@@ -50,15 +50,15 @@ MAIN_FOLDER_ID = config['drive']['main_folder_id']
 # === Authentication ===
 def get_credentials():
     creds = None
-    if os.path.exists(TOKEN_PATH):
-        creds = Credentials.from_authorized_user_file(TOKEN_PATH, SCOPES)
+    if os.path.exists(TOKEN):
+        creds = Credentials.from_authorized_user_file(TOKEN, SCOPES)
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
-            flow = InstalledAppFlow.from_client_secrets_file(CREDENTIALS_PATH, SCOPES)
+            flow = InstalledAppFlow.from_client_secrets_file(CREDENTIALS, SCOPES)
             creds = flow.run_local_server(port=0)
-            with open(TOKEN_PATH, 'w') as token:
+            with open(TOKEN, 'w') as token:
                 token.write(creds.to_json())
     return creds
 
