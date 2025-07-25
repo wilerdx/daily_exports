@@ -72,6 +72,7 @@ def find_or_create_month_folder(service_drive, parent_folder_id, month_year_name
     results = service_drive.files().list(q=query, fields="files(id, name)").execute()
     folders = results.get('files', [])
     if folders:
+        print("--------------------------------------------------")
         print(f"📂 Found existing folder: '{month_year_name}'")
         return folders[0]['id']
 
