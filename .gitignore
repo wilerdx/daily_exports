@@ -1,0 +1,41 @@
+# === Bytecode ===
+__pycache__/
+*.py[cod]
+*.pyo
+
+# === Virtual environments ===
+venv/
+env/
+.venv/
+.env/
+
+# === System files ===
+.DS_Store
+Thumbs.db
+
+# === Editor files ===
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# === Logs & temporary files ===
+*.log
+*.tmp
+*.bak
+
+# === Config & secrets ===
+config.toml
+*.env
+*.json
+token.*
+credentials.*
+config.*
+*.toml
+
+# === Output (data, reports, etc.) ===
+*.csv
+*.tsv
+*.xlsx
+*.pdf
+
