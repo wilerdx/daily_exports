@@ -34,9 +34,9 @@ for i, sheet_name in enumerate(SHEET_NAMES):
     filename = FILENAMES[i]
     ext = filename.split('.')[-1].lower()  # Extract extension from filename
     save_dir = DOWNLOAD_PATHS[i]
-    
+
     print(f"Downloading: {sheet_name} → {filename}")
-    
+
     try:
         # Request the full range from the sheet
         result = service.spreadsheets().values().get(
@@ -45,35 +45,35 @@ for i, sheet_name in enumerate(SHEET_NAMES):
         ).execute()
     except Exception as e:
         print(f"  Error: Could not access sheet '{sheet_name}': {str(e)}")
-        print(f"  Trying with quotes around sheet name...")
+        print("Trying with quotes around sheet name...")
         try:
             # Try with quotes in case of special characters
             result = service.spreadsheets().values().get(
                 spreadsheetId=SPREADSHEET_ID,
                 range=f"'{sheet_name}'"
             ).execute()
-            print(f"  Success with quoted sheet name!")
+            print("Success with quoted sheet name!")
         except Exception as e2:
             print(f"  Still failed with quotes: {str(e2)}")
-            print(f"  Skipping this sheet...")
+            print("Skipping this sheet...")
             continue
-    
+
     values = result.get('values', [])
-    
+
     if not values:
         print(f"  Warning: No data found in '{sheet_name}'")
         continue
-    
+
     # Remove empty row at the end if it exists
     if values and all(not cell or str(cell).strip() == '' for cell in values[-1]):
         values.pop()
-    
+
     # No special processing needed - all sheets processed the same way
-    
+
     # Make sure directory exists
     os.makedirs(save_dir, exist_ok=True)
     file_path = os.path.join(save_dir, filename)
-    
+
     # Save file
     if ext == "csv":
         with open(file_path, "w", newline="", encoding="utf-8") as f:
@@ -95,7 +95,7 @@ for i, sheet_name in enumerate(SHEET_NAMES):
         if content.endswith('\n'):
             with open(file_path, 'w', encoding='utf-8') as f:
                 f.write(content.rstrip('\n'))
-    
+
     print(f"  Saved to {file_path}")
 
 print("All files downloaded successfully.")
