@@ -39,3 +39,4 @@ config.*
 *.xlsx
 *.pdf
 
+.ropeproject
