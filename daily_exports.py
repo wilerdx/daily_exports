@@ -37,7 +37,7 @@ def validate_config(config):
         for key in keys:
             if key not in config[section]:
                 raise ValueError(f"Missing key: '{key}' under [{section}] in config.toml")
-            
+
 config = load_config()
 validate_config(config)
 
@@ -45,7 +45,7 @@ CREDENTIALS = os.path.expanduser(config['gdrive']['credentials'])
 TOKEN = os.path.expanduser(config['gdrive']['token'])
 SPREADSHEET_ID = config['sheets']['spreadsheet_id']
 SHEETS = config['sheets']['sheets']
-MAIN_FOLDER_ID = config['drive']['main_folder_id'] 
+MAIN_FOLDER_ID = config['drive']['main_folder_id']
 
 # === Authentication ===
 def get_credentials():
